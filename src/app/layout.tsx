@@ -1,7 +1,7 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import Providers from "./providers";        // require: app/providers.tsx
-import Header from "../components/Header";  // require: components/Header.tsx
+import Providers from "./providers";         // require: src/app/providers.tsx
+import Header from "../../components/Header"; // require: src/components/Header.tsx (or project-root/components/Header.tsx)
 
 export const metadata: Metadata = {
   title: "PR Sentiment Dashboard",

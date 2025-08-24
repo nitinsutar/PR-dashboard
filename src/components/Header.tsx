@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useSession } from "next-auth/react";
-import { doSignIn, doSignOut } from "../lib/auth-client"; // adjust if your lib path differs
+import { doSignIn, doSignOut } from "../../lib/auth-client"; // src-relative
 
 export default function Header() {
   const { data: session, status } = useSession();
