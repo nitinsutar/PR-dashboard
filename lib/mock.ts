@@ -14,14 +14,13 @@ const sentiments: Mention["sentiment"][] = ["positive", "neutral", "negative"];
 let lastTotals = { positive: 120, neutral: 80, negative: 40 };
 
 export function generateMockFeed(): FeedPayload {
-  // drift totals slightly
   lastTotals = {
     positive: Math.max(0, lastTotals.positive + Math.floor(Math.random() * 11 - 5)),
     neutral: Math.max(0, lastTotals.neutral + Math.floor(Math.random() * 11 - 5)),
     negative: Math.max(0, lastTotals.negative + Math.floor(Math.random() * 11 - 5))
   };
   const total = lastTotals.positive + lastTotals.neutral + lastTotals.negative || 1;
-  const sentimentScore = (lastTotals.positive - lastTotals.negative) / total; // -1..1
+  const sentimentScore = (lastTotals.positive - lastTotals.negative) / total;
 
   const platformShare = {
     twitter: Math.random(),

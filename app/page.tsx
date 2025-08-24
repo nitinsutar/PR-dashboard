@@ -1,5 +1,6 @@
 "use client";
 import useSWR from "swr";
+import { useSearchParams } from "next/navigation";
 import SentimentGauge from "@/components/SentimentGauge";
 import SentimentTrend from "@/components/SentimentTrend";
 import PlatformShare from "@/components/PlatformShare";
@@ -11,7 +12,9 @@ import AlertBanner from "@/components/AlertBanner";
 const fetcher = (u: string) => fetch(u).then((r) => r.json());
 
 export default function Page() {
-  const { data } = useSWR("/api/feed?celebrity=Demo%20Star", fetcher, { refreshInterval: 5000 });
+  const sp = useSearchParams();
+  const celeb = sp.get("celebrity") || "Demo Star";
+  const { data } = useSWR(`/api/feed?celebrity=${encodeURIComponent(celeb)}`, fetcher, { refreshInterval: 5000 });
 
   const positive = data?.totals?.positive ?? 0;
   const neutral = data?.totals?.neutral ?? 0;
@@ -27,7 +30,7 @@ export default function Page() {
         </div>
         <div className="lg:col-span-3 rounded-2xl bg-zinc-900 border border-zinc-800 p-4">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold">Live Sentiment Trend</h2>
+            <h2 className="text-lg font-semibold">Live Sentiment Trend — {celeb}</h2>
             <div className="text-sm text-zinc-400">Celebrity: {data?.celebrity ?? "-"}</div>
           </div>
           <SentimentTrend nowScore={data?.sentimentScore ?? 0} />
@@ -55,7 +58,7 @@ export default function Page() {
         </div>
       </div>
 
-      <div className="mt-6 text-xs text-zinc-500">Phase 1 demo data. Plug real sources in Phase 2.</div>
+      <div className="mt-6 text-xs text-zinc-500">Phase 2 — X + Reddit live ingestion with Vercel Cron + KV.</div>
     </main>
   );
 }
